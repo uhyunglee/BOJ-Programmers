@@ -4,7 +4,7 @@ class Solution {
     private final int[][] mem = new int[501][501];
     
     private int max(int x, int y, int[][] triangle){
-        if(y == triangle.length) return 0;
+        if(y == triangle.length) return 0;//종료조건
         if(mem[x][y] != -1) return mem[x][y];
         
         return mem[x][y] = triangle[y][x] + Math.max(max(x, y+1, triangle), max(x+1, y+1, triangle));
