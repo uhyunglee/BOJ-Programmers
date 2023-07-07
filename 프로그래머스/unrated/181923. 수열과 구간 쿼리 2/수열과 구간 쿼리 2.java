@@ -1,26 +1,21 @@
+import java.util.Arrays;
 
 class Solution {
-    private static final int INF = 1000001;
-
-    public int[] solution(int[] arr, int[][] queries) {
+    public int[] solution(int[] arr, int[][] queries){
         int[] answer = new int[queries.length];
-        int idx = 0;
-
-        for (int[] query : queries) {
-            int s = query[0];
-            int e = query[1];
-            int k = query[2];
-
-            int result = INF;
-            for (int i = s; i <= e; i++) {
-                if (arr[i] <= k || arr[i] >= result) continue;
-
-                result = arr[i];
+        Arrays.fill(answer, -1);
+        
+        for(int idx=0; idx<queries.length; idx++){
+            int[] query = queries[idx];
+           int s = query[0], e = query[1], k = query[2];
+            
+            for(int i=s; i<=e; i++){
+                if(k < arr[i]){
+                    answer[idx] = answer[idx] == -1 ? arr[i] : Math.min(answer[idx], arr[i]);
+                }
             }
-
-            answer[idx++] = result == INF ? -1 : result;
         }
-
         return answer;
     }
+   
 }
