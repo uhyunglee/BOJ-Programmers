@@ -1,14 +1,19 @@
 class Solution {
     public int[] solution(int[] arr, int[][] queries) {
         int[] answer = {};
-        int temp1 = 0;
-        int temp2 = 0;
         
-        for(int i=0; i<queries.length; i++){
-            temp1 = arr[queries[i][0]];
+        /*for(int i=0; i<queries.length; i++){
+            temp = arr[queries[i][0]];
             arr[queries[i][0]] = arr[queries[i][1]];
-            arr[queries[i][1]] = temp1;
+            arr[queries[i][1]] = temp;
             
+        }*/
+        for(int[] query : queries){
+            int i = query[0];
+            int j = query[1];
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
         return arr;
     }
