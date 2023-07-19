@@ -1,4 +1,4 @@
-import java.util.stream.IntStream;
+import java.util.stream.*;
 
 class Solution {
     private static final int[][] RULES = {
@@ -6,14 +6,11 @@ class Solution {
         {2, 1, 2, 3, 2, 4, 2, 5},
         {3, 3, 1, 1, 2, 2, 4, 4, 5, 5},
     };
-    
     private int getPicked(int person, int problem){
         int[] rule = RULES[person];
         int index = problem % rule.length;
-        
         return rule[index];
     }
-    
     public int[] solution(int[] answers) {
         int[] corrects = new int[3];
         int max = 0;
@@ -32,8 +29,8 @@ class Solution {
         }
         final int maxCorrects = max;
         return IntStream.range(0,3)
-            .filter(i -> corrects[i] == maxCorrects)
-            .map(i -> i + 1)
-            .toArray();
+            	.filter(i -> corrects[i] == maxCorrects)
+            	.map(i -> i + 1)
+            	.toArray();
     }
 }
