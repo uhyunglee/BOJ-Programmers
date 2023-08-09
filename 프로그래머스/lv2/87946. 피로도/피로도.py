@@ -1,14 +1,14 @@
 from itertools import permutations
 
-def solution(k, dungeons):
+def solution(k, dg):
     answer = -1
-    candidates = list(permutations([x for x in range(len(dungeons))], len(dungeons)))
+    candidates = list(permutations([x for x in range(len(dg))], len(dg)))
 
     for candidate in candidates:
         temp, cnt = k, 0
         for idx in candidate:
-            if temp >= dungeons[idx][0]:
-                temp -= dungeons[idx][1]
+            if temp >= dg[idx][0]:
+                temp -= dg[idx][1]
                 cnt += 1
         answer = max(answer, cnt)
 
