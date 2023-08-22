@@ -1,5 +1,8 @@
 class Solution {
     public int solution(int[] numbers, int k) {
-        return numbers[2 * (k - 1) % numbers.length];
+        int answer = 0;
+        answer = numbers[2*(k-1) % numbers.length];
+        
+        return answer;
     }
 }
