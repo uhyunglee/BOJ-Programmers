@@ -3,11 +3,11 @@ class Solution {
         String answer = "";
         
         for(int i = 0; i < my_string.length(); i++){
-            if(my_string.charAt(i) >= 65 && my_string.charAt(i) <= 90){
-                answer += (char)(my_string.charAt(i) + 32);
-            }else{
-                answer += (char)(my_string.charAt(i) - 32);
-            }
+            char c = my_string.charAt(i);
+            if(Character.isUpperCase(c)){
+                answer += String.valueOf(c).toLowerCase();
+            }else
+                answer += String.valueOf(c).toUpperCase();
         }
         return answer;
     }
