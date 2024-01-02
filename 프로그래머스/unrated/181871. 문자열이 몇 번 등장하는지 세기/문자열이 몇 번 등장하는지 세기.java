@@ -1,13 +1,11 @@
 class Solution {
     public int solution(String myString, String pat) {
-        int count = 0;
-        String answer = "";
-        for(int i = 0; i < myString.length(); i++){
-            answer += myString.charAt(i);
-            if(answer.endsWith(pat))
-                count++;
+        int cnt = 0;
+        for(int i=0; i<myString.length(); i++) {
+            if(myString.substring(i).startsWith(pat)){
+                cnt++;
+            }
         }
-        
-        return count;
+        return cnt;
     }
 }
