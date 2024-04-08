@@ -1,19 +1,20 @@
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class Solution {
     public String[] solution(String myString) {
-        String[] answer = myString.split("x");
-        ArrayList<String> li = new ArrayList<>();
-        Arrays.sort(answer);
-        for(int i = 0; i < answer.length; i++){
-            if(!answer[i].isEmpty())
-                li.add(answer[i]);
+        String[] splitArr = myString.split("x");
+        ArrayList<String> resultList = new ArrayList<>();
+        
+        for (String str : splitArr) {
+            if (!str.isEmpty()) {
+                resultList.add(str);
+            }
         }
-        String[] ans = new String[li.size()];
-        for(int i = 0; i < li.size(); i++){
-            ans[i] = li.get(i);
-        }
-        return ans;
+        
+        String[] resultArr = resultList.toArray(new String[resultList.size()]);
+        Arrays.sort(resultArr);
+     
+        return resultArr;
     }
 }
