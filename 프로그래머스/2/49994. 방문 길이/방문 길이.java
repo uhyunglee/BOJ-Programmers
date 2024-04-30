@@ -1,36 +1,26 @@
 import java.util.*;
 
 class Solution {
-    private static boolean isValidMove(int nx, int ny){
-        return 0 <= nx && nx < 11 && 0 <= ny && ny < 11;
-    }
-    
-    private static final HashMap<Character, int[]> location = new HashMap<>();
-    
-    private void initLocation(){
+    public int solution(String dirs) {
+        int x = 5, y = 5;
+        HashMap<Character, int[]> location = new HashMap<>();
+        HashSet<String> answer = new HashSet<>();
+        
         location.put('U', new int[]{0, 1});
         location.put('D', new int[]{0, -1});
         location.put('L', new int[]{-1, 0});
         location.put('R', new int[]{1, 0});
-    }
-    
-    public int solution(String dirs) {
-        initLocation();
-        int x = 5, y = 5;
-        HashSet<String> answer = new HashSet<>();
         
         for(int i = 0; i < dirs.length(); i++){
             int[] offset = location.get(dirs.charAt(i));
-            int nx = x + offset[0];
-            int ny = y + offset[1];
-            if(!isValidMove(nx, ny))
-                continue;
+            int dx = x + offset[0];
+            int dy = y + offset[1];
             
-            answer.add(x + " " + y + " " + nx + " " + ny);
-            answer.add(nx + " " + ny + " " + x + " " + y);
-            
-            x = nx;
-            y = ny;
+            if(dx < 0 || dx > 10 || dy < 0 || dy > 10) continue;
+            answer.add(x + " " + y + " " + dx + " " + dy);
+            answer.add(dx + " " + dy + " " + x + " " + y);
+            x = dx;
+            y = dy;
         }
         return answer.size() / 2;
     }
