@@ -2,22 +2,21 @@ import java.util.*;
 
 class Solution {
     public int solution(String s) {
-        String[] str = s.split(" ");
-        
         ArrayDeque<String> stack = new ArrayDeque<>();
+        StringTokenizer st = new StringTokenizer(s);
         
-        for(int i = 0; i < str.length; i++){
-            if(str[i].equals("Z")){
-                stack.pop();
-                continue;
-            }else
-                stack.push(str[i]);
+        while(st.hasMoreTokens()){
+            stack.push(st.nextToken());
         }
         
         int answer = 0;
         
         while(!stack.isEmpty()){
-            answer += Integer.parseInt(stack.pop());
+            String str = stack.pop();
+            if(str.equals("Z"))
+            	stack.pop();
+            else
+                answer += Integer.parseInt(str);
         }
         return answer;
     }
