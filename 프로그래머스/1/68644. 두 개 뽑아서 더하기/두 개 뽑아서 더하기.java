@@ -1,30 +1,20 @@
-import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] numbers) {
-        ArrayList<Integer> list = new ArrayList<>();
-        int n = numbers.length;
+        HashSet<Integer> set = new HashSet<>();
         
-        for(int i = 0; i < n; i++){
-            for(int j = i+1; j < n; j++){
-                if(i != j){
-                    int first = numbers[i];
-                    int second = numbers[j];
-                    list.add(first + second);
-                }
+        for(int i = 0; i < numbers.length; i++){
+            for(int j = i + 1; j < numbers.length; j++){
+                set.add(numbers[i] + numbers[j]);
             }
         }
-        int[] answer = list.stream().mapToInt(i->i).toArray();
         
-        Integer[] result = Arrays.stream(answer)
-            .boxed()
-            .distinct()
-            .toArray(Integer[]::new);
-        Arrays.sort(result);
-        
-        return Arrays.stream(result)
+        int[] answer = set.stream()
+            .sorted()
             .mapToInt(Integer::intValue)
             .toArray();
+        
+        return answer;
     }
 }
