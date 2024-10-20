@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-    	int[] students = new int[n+2];
+    	int[] students = new int[n+10];
         int possible = 0;
         for(int i : lost){
             students[i]--;
