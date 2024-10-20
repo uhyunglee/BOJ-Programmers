@@ -1,37 +1,36 @@
-import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] answers) {
-        int[] student1 = {1, 2, 3, 4, 5};
-        int[] student2 = {2, 1, 2, 3, 2, 4, 2, 5};
-        int[] student3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+        int[][] pattern = {
+            {1, 2, 3, 4, 5},
+            {2, 1, 2, 3, 2, 4, 2, 5},
+            {3, 3, 1, 1, 2, 2, 4, 4, 5, 5}
+        };
+        int[] scores = new int[3];
         
-        int n = answers.length;
-        int cnt1 = 0;
-        int cnt2 = 0;
-        int cnt3 = 0;
+        for(int i = 0 ; i < answers.length; i++){
+            for(int j = 0; j < pattern.length; j++){
+                if(answers[i] == pattern[j][i % pattern[j].length])
+                    scores[j]++;
+            }
+        }
+        int maxScore = 0;
+        for(int i = 0; i < scores.length; i++){
+            if(scores[i] > maxScore) maxScore = scores[i];
+        }
+        //int maxScore = Arrays.stream(scores).max().getAsInt();
         
-        for(int i = 0; i < n; i++){
-            if(student1[i % student1.length] == answers[i])
-                cnt1++;
-        }
-        for(int i = 0; i < n; i++){
-            if(student2[i % student2.length] == answers[i])
-                cnt2++;
-        }
-        for(int i = 0; i < n; i++){
-            if(student3[i % student3.length] == answers[i])
-                cnt3++;
-        }
-        int[] scores = {cnt1, cnt2, cnt3};
-        
-        int maxScore = Arrays.stream(scores).max().getAsInt();
         ArrayList<Integer> answer = new ArrayList<>();
         for(int i = 0; i < scores.length; i++){
-            if(scores[i] == maxScore)
-                answer.add(i+1);
+            if(maxScore == scores[i])
+                answer.add(i + 1);
         }
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        int[] result = new int[answer.size()];
+        for(int i = 0; i < answer.size(); i++){
+            result[i] = answer.get(i);
+        }
+        return result;
+        //return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 }
