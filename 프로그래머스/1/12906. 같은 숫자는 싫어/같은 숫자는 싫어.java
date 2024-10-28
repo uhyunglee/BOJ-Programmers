@@ -1,22 +1,17 @@
 import java.util.*;
 
 public class Solution {
-    public int[] solution(int []arr) {
-        ArrayDeque<Integer> stack = new ArrayDeque<>();
+    public int[] solution(int[] arr) {
+        List<Integer> list = new ArrayList<>();
         
-        stack.push(arr[0]);
-        for(int i = 1; i < arr.length; i++){
-            if(arr[i] != stack.peek()) stack.push(arr[i]);
+        for(int i = 1; i < arr.length; i+=1){
+            if(arr[i-1] != arr[i]){
+                list.add(arr[i-1]);
+            }
         }
-        int[] stackArr = new int[stack.size()];
-        int[] answer = new int[stack.size()];
+        list.add(arr[arr.length-1]);
         
-        stackArr = stack.stream().mapToInt(Integer::intValue).toArray();
-        
-        for(int i = 0; i < stackArr.length; i++){
-            answer[i] = stackArr[stackArr.length -1 -i];
-        }
-        
-        return answer;
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
