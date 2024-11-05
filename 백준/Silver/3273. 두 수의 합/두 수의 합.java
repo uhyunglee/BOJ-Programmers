@@ -1,40 +1,33 @@
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+        // NOTE: 1<= a <= 1,000,000
+        // two pointer
         int n = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int[] nums = new int[n];
-
-        for(int i = 0; i < n; i++){
-            nums[i] = Integer.parseInt(st.nextToken());
+        List<Integer> list = new ArrayList<>();
+        while(st.hasMoreTokens()){
+            int num = Integer.parseInt(st.nextToken());
+            list.add(num);
         }
-        Arrays.sort(nums);
-
+        list.sort(null); // 오름차순 정렬
         int x = Integer.parseInt(br.readLine());
-        int left = 0;
-        int right = nums.length-1;
         int count = 0;
 
-        while(left < right){
-            if(nums[left] + nums[right] < x)
-                left+=1;
-            else if(nums[left] + nums[right] > x)
-                right-=1;
-            else {
+        int left = 0;
+        int right = n - 1;
+        while(left != right){
+            int sum = list.get(left) + list.get(right);
+            if(sum == x){
                 count++;
-                left+=1;
-            }
+                left++;
+            }else if(sum > x) right--;
+            else left++;
         }
         System.out.println(count);
     }
