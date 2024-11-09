@@ -27,7 +27,8 @@ public class Main {
         for(int i = 0; i < students.length; i++){
             for(int j = 0; j < students[i].length; j++){
                 count += students[i][j] / k;
-                count += students[i][j] % k;
+                if(students[i][j] % k != 0)
+                    count += 1;
             }
         }
         System.out.println(count);
