@@ -1,28 +1,30 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) throws IOException{
+class Main {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        int[] arr = new int[10];
         int roomNum = Integer.parseInt(br.readLine());
+
+        // N <= 1,000,000 -> N log N
+        int[] set = new int[10];
 
         // NOTE: 각 배열에 숫자 카운트
         while(roomNum != 0){
-            int num = roomNum % 10;
-            arr[num]++;
-            roomNum /= 10;
+           int num = roomNum % 10;
+           set[num]++;
+           roomNum /= 10;
         }
-        // NOTE: 6과 9 바꿔 쓸 수 있음 -> 6과 9 중 하나로 통일(6이 2개이다 라고 생각)
-        arr[6] += arr[9];
-        arr[6] = arr[6] % 2 == 0 ? arr[6] / 2 : arr[6] / 2 + 1;
-        arr[9] = 0;
+        // NOTE: 6과 9를 바꿔쓸 수 있음 -> 하나로 생각.
+        set[6] += set[9];
+        set[6] = set[6] % 2 == 0 ? set[6] / 2 : set[6] / 2 + 1;
+        set[9] = 0;
+
         int needSet = -1;
-        for(int i = 0; i < arr.length; i++){
-            if(arr[i] > needSet)
-                needSet = arr[i];
+        for(int i = 0; i < set.length; i++){
+            if(set[i] > needSet){
+                needSet = set[i];
+            }
         }
         System.out.println(needSet);
     }
