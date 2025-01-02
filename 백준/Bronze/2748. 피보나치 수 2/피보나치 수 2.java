@@ -6,16 +6,16 @@ class Main {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        long[] fib = new long[91];
-        fib[0] = 0;
-        fib[1] = 1;
-        fib[2] = 1;
-        // NOTE: 점화식 작성
-        for(int i = 2; i < fib.length; i++){
-            fib[i] = fib[i-1] + fib[i-2];
-        }
 
-        System.out.println(fib[n]);
+        System.out.println(fibo(n));
 
+    }
+    static long[] memo = new long[91];
+
+    static long fibo(int n){
+        if(n == 1 || n == 2) return 1;
+        if(memo[n] != 0) return memo[n];
+        memo[n] = fibo(n-1) + fibo(n-2);
+        return memo[n];
     }
 }
