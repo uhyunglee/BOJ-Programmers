@@ -4,38 +4,93 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 class Main {
+    static class Node{
+        char data;
+        Node prev, next;
+
+        Node(char data){
+            this.data = data;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    static class LinkedList {
+        Node head;
+        Node tail;
+        Node cursor;
+
+        LinkedList(){
+            head = new Node('H');
+            tail = new Node('T');
+            head.next = tail;
+            tail.prev = head;
+            cursor = tail;
+        }
+
+        void insert(char data){
+            Node newNode = new Node(data);
+            newNode.prev = cursor.prev;
+            newNode.next = cursor;
+            cursor.prev.next = newNode;
+            cursor.prev = newNode;
+        }
+
+        void delete(){
+            if(cursor.prev != head){
+                cursor.prev.prev.next = cursor;
+                cursor.prev = cursor.prev.prev;
+            }
+        }
+
+        void moveLeft(){
+            if(cursor.prev != head){
+                cursor = cursor.prev;
+            }
+        }
+
+        void moveRight(){
+            if(cursor != tail){
+                cursor = cursor.next;
+            }
+        }
+
+        String getPassword(){
+            StringBuilder sb = new StringBuilder();
+            Node current = head.next;
+            while(current != tail){
+                sb.append(current.data);
+                current = current.next;
+            }
+            return sb.toString();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n  = Integer.parseInt(br.readLine());
 
-        for(int i = 0; i < n; i++){
-            String tmp = br.readLine();
-//            tmp.trim();
-            ArrayDeque<Character> L = new ArrayDeque<>();
-            ArrayDeque<Character> R = new ArrayDeque<>();
+        int t  = Integer.parseInt(br.readLine());
 
-            for(char c : tmp.toCharArray()){
-                if(c == '<'){
-                    if(L.isEmpty()) continue;
-                    R.addFirst(L.pollLast());
-                }else if(c == '>'){
-                    if(R.isEmpty()) continue;
-                    L.addLast(R.pollFirst());
-                }else{
-                    if(c == '-'){
-                        if(L.isEmpty()) continue;
-                        L.pollLast();
-                        continue;
-                    }
-                    L.addLast(c);
+        while(t-- > 0) {
+            String input = br.readLine();
+            LinkedList list = new LinkedList();
+
+            for(char c : input.toCharArray()){
+                switch(c) {
+                    case '<':
+                        list.moveLeft();
+                        break;
+                    case '>':
+                        list.moveRight();
+                        break;
+                    case '-':
+                        list.delete();
+                        break;
+                    default:
+                        list.insert(c);
                 }
             }
-            String res1 = L.stream().map(String::valueOf).collect(Collectors.joining(""));
-            String res2 = R.stream().map(String::valueOf).collect(Collectors.joining(""));
-            StringBuilder sb = new StringBuilder();
-            sb.append(res1);
-            sb.append(res2);
-            System.out.println(sb);
+            System.out.println(list.getPassword());
         }
     }
 }
