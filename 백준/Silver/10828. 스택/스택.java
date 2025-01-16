@@ -44,18 +44,20 @@ class Main {
                     push(num);
                     break;
                 case "pop":
-                    System.out.println(pop());
+                    bw.write(String.valueOf(pop() + "\n"));
                     break;
                 case "size":
-                    System.out.println(size());
+                    bw.write(String.valueOf(size() + "\n"));
                     break;
                 case "empty":
-                    System.out.println(empty());
+                    bw.write(String.valueOf(empty() + "\n"));
                     break;
                 case "top":
-                    System.out.println(top());
+                    bw.write(String.valueOf(top() + "\n"));
                     break;
             }
         }
+        bw.flush();
+        bw.close();
     }
 }
