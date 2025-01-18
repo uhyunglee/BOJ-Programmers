@@ -6,25 +6,28 @@ class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        Stack<Integer> stack = new Stack<>();
 
         int n = Integer.parseInt(br.readLine());
-        int start = 0;
+        int[] stack = new int[n];
+
+        int idx = 0;
+        int pointer = 0;
 
         while(n-- > 0){
-            int value = Integer.parseInt(br.readLine());
-            if(value > start){
-                for(int i = start + 1; i <= value; i++){
-                    stack.push(i);
-                    sb.append("+").append("\n");
+            int element = Integer.parseInt(br.readLine());
+            if(element > pointer){
+                for(int i = pointer + 1; i <= element; i++){
+                    stack[idx] = i;
+                    idx++;
+                    sb.append("+\n");
                 }
-                start = value;
-            }else if(stack.peek() != value){
+                pointer = element;
+            }else if(stack[idx - 1] != element){
                 System.out.println("NO");
                 return;
             }
-            stack.pop();
-            sb.append("-").append("\n");
+            idx--;
+            sb.append("-\n");
         }
         System.out.println(sb);
     }
