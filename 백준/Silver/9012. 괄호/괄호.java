@@ -5,6 +5,7 @@ import java.util.stream.*;
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
         int count = 0;
@@ -24,8 +25,10 @@ class Main {
                 }
             }
             if(stack.isEmpty()){
-                System.out.println("YES");
-            }else System.out.println("NO");
+                bw.write("YES\n");
+            }else bw.write("NO\n");
         }
+        bw.flush();
+        bw.close();
     }
 }
