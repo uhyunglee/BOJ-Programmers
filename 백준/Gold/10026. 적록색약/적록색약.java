@@ -13,109 +13,74 @@ class Main{
     static char[][] grid;
     static int[][] visited;
     static int N;
+    static int[] dx = {1, 0 , -1, 0};
+    static int[] dy = {0, 1, 0, -1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         grid = new char[N][N];
-        visited = new int[N][N];
-        int[] dx = {1, 0, -1, 0};
-        int[] dy = {0, 1, 0, -1};
 
         for(int i = 0; i < N; i++){
-            char[] line = br.readLine().toCharArray();
+            grid[i] = br.readLine().toCharArray();
+        }
+
+        visited = new int[N][N];
+        int normal = 0;
+
+        for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
-                grid[i][j] = line[j];
+                if(visited[i][j] == 0){
+                    bfs(i, j, false);
+                    normal++;
+                }
             }
         }
-        Queue<Point> queue = new LinkedList<>();
-        Queue<Point> blindQueue = new LinkedList<>();
-        int normal = 0;
+
+        visited = new  int[N][N];
         int blind = 0;
 
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
-                if(grid[i][j] == 'R' && visited[i][j] == 0){
-                    queue.add(new Point(i, j));
-                    normal++;
-                    while(!queue.isEmpty()){
-                        Point cur = queue.poll();
-                        for(int k = 0; k < 4; k++){
-                            int nx = cur.x + dx[k];
-                            int ny = cur.y + dy[k];
-                            if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-                            if(visited[nx][ny] == 1 || grid[nx][ny] == 'G' || grid[nx][ny] == 'B') continue;
-                            visited[nx][ny] = 1;
-                            queue.add(new Point(nx, ny));
-                        }
-                    }
-
-                }else if(grid[i][j] == 'G' && visited[i][j] == 0){
-                    queue.add(new Point(i, j));
-                    normal++;
-                    while(!queue.isEmpty()){
-                        Point cur = queue.poll();
-                        for(int k = 0; k < 4; k++){
-                            int nx = cur.x + dx[k];
-                            int ny = cur.y + dy[k];
-                            if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-                            if(visited[nx][ny] == 1 || grid[nx][ny] == 'R' || grid[nx][ny] == 'B') continue;
-                            visited[nx][ny] = 1;
-                            queue.add(new Point(nx, ny));
-                        }
-                    }
-                }else if(grid[i][j] == 'B' && visited[i][j] == 0){
-                    queue.add(new Point(i, j));
-                    normal++;
-                    while(!queue.isEmpty()){
-                        Point cur = queue.poll();
-                        for(int k = 0; k < 4; k++){
-                            int nx = cur.x + dx[k];
-                            int ny = cur.y + dy[k];
-                            if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-                            if(visited[nx][ny] == 1 || grid[nx][ny] == 'R' || grid[nx][ny] == 'G') continue;
-                            visited[nx][ny] = 1;
-                            queue.add(new Point(nx, ny));
-                        }
-                    }
-                }
-            }
-        }
-        // NOTE: 적록색맹 BFS
-        visited = new int[N][N];
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if((grid[i][j] == 'R' || grid[i][j] == 'G') && visited[i][j] == 0){
-                    blindQueue.add(new Point(i, j));
+                if(visited[i][j] == 0){
+                    bfs(i, j, true);
                     blind++;
-                    while(!blindQueue.isEmpty()){
-                        Point cur = blindQueue.poll();
-                        for(int k = 0; k < 4; k++){
-                            int nx = cur.x + dx[k];
-                            int ny = cur.y + dy[k];
-                            if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-                            if(visited[nx][ny] == 1 || grid[nx][ny] == 'B') continue;
-                            visited[nx][ny] = 1;
-                            blindQueue.add(new Point(nx, ny));
-                        }
-                    }
-                }else if(grid[i][j] == 'B' && visited[i][j] == 0){
-                    blindQueue.add(new Point(i, j));
-                    blind++;
-                    while(!blindQueue.isEmpty()){
-                        Point cur = blindQueue.poll();
-                        for(int k = 0; k < 4; k++){
-                            int nx = cur.x + dx[k];
-                            int ny = cur.y + dy[k];
-                            if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
-                            if(visited[nx][ny] == 1 || grid[nx][ny] == 'R' || grid[nx][ny] == 'G' ) continue;
-                            visited[nx][ny] = 1;
-                            blindQueue.add(new Point(nx, ny));
-                        }
-                    }
                 }
             }
         }
         System.out.println(normal + " " + blind);
+
+    }
+    public static void bfs(int startX, int startY, boolean isBlind){
+        Queue<Point> queue = new LinkedList<>();
+        queue.add(new Point(startX, startY));
+        visited[startX][startY] = 1;
+        char color = grid[startX][startY];
+
+        while(!queue.isEmpty()){
+            Point cur = queue.poll();
+
+            for(int i = 0; i < 4; i++){
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+
+                if(isOutRange(nx, ny) || visited[nx][ny] == 1) continue;
+
+                if(isBlind){
+                    if(!isSameColor(color, grid[nx][ny])) continue;
+                }else{
+                    if(color != grid[nx][ny]) continue;
+                }
+                visited[nx][ny] = 1;
+                queue.add(new Point(nx, ny));
+            }
+        }
+    }
+    public static boolean isOutRange(int x, int y){
+        return x < 0 || x >= N || y < 0 || y >= N;
+    }
+    public static boolean isSameColor(char c1, char c2){
+        if(c1 == 'B') return c2 == 'B';
+        return c2 != 'B';
     }
 }
