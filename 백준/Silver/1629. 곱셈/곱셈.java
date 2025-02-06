@@ -3,29 +3,26 @@ import java.io.*;
 
 
 class Main {
-    static long A;
-    static long B;
-    static long C;
-
+        static long a;
+        static long b;
+        static long c;
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
+        a = sc.nextInt();
+        b = sc.nextInt();
+        c = sc.nextInt();
 
-        A = sc.nextLong();
-        B = sc.nextLong();
-        C = sc.nextLong();
-
-        System.out.println(recursion(A, B));
+        System.out.println(pow(a, b));
     }
 
-    static long recursion(long a, long b) {
-        if (b == 1)
-            return a % C;
+    static long pow(long a, long b){
+        if(b == 1) return a % c;
 
-        long k = recursion(a, b / 2);
+        long result = pow(a, b/2);
+        result = result * result % c;
 
-        if (b % 2 == 1) {
-            return (k * k % C) * A % C;
-        }
-        return k * k % C;
+        if(b % 2 == 0) return result;
+
+        return result * a % c;
     }
 }
