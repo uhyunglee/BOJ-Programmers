@@ -10,9 +10,12 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         s = Integer.parseInt(st.nextToken());
-        numbers = Arrays.stream(br.readLine().split(" "))
-                .mapToInt(Integer::parseInt).toArray();
+        numbers = new int[n];
 
+        st = new StringTokenizer(br.readLine());
+        for(int i = 0; i < n ; i++){
+            numbers[i] = Integer.parseInt(st.nextToken());
+        }
         solve(0, 0);
         System.out.println(answer);
     }
