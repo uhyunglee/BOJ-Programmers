@@ -5,15 +5,14 @@ public class Main {
     static int s;
     static int[] numbers;
     static int answer = 0;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        s = sc.nextInt();
-        numbers = new int[n];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        s = Integer.parseInt(st.nextToken());
+        numbers = Arrays.stream(br.readLine().split(" "))
+                .mapToInt(Integer::parseInt).toArray();
 
-        for(int i = 0; i < n ; i++){
-            numbers[i] = sc.nextInt();
-        }
         solve(0, 0);
         System.out.println(answer);
     }
