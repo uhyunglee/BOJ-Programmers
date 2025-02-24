@@ -53,6 +53,7 @@ public class Main {
     }
 
     static void combination(int depth, int r, int[][] map){
+        // base
         if(depth == r){
             int cnt = check(map);
             ans = Math.min(ans, cnt);
@@ -75,8 +76,8 @@ public class Main {
                 int ny = y + dy[dir];
                 while(true){
                     if(nx < 0 || nx >= n || ny < 0 || ny >= m) break;
-                    if(map[nx][ny] == 6) break;
-                    mapCopy[nx][ny] = -1;
+                    if(map[nx][ny] == 6) break; // 벽인 경우
+                    mapCopy[nx][ny] = -1; // 탐색 완료
                     nx += dx[dir];
                     ny += dy[dir];
                 }
@@ -86,7 +87,7 @@ public class Main {
         }
     }
 
-    static int check(int[][] map){
+    static int check(int[][] map){ // 사각지대를 구하는 함수
         int count = 0;
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
