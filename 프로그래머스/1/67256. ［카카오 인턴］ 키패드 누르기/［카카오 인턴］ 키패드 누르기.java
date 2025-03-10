@@ -1,44 +1,42 @@
 class Solution {
+    static int left = 10;
+    static int right = 12;
+    
     public String solution(int[] numbers, String hand) {
-        StringBuilder sb = new StringBuilder();
-
-        int left = 10;
-        int right = 12;
-
-        for (int i = 0; i < numbers.length; i++) {
-            int n = numbers[i];
-
-            if (n == 1 || n == 4 || n == 7) {
-                left = n;
-                sb.append("L");
-            }
-            if (n == 3 || n == 6 || n == 9) {
-                right = n;
-                sb.append("R");
-            }
-            if (n == 2 || n == 5 || n == 8 || n == 0) {
-                if( n == 0 ) n = 11;
-
-                int leftDiff = (Math.abs(n - left) / 3) + (Math.abs(n - left) % 3);
-                int rightDiff =(Math.abs(n - right) / 3) + (Math.abs(n - right) % 3);
-
-                if (leftDiff == rightDiff) {
-                    if (hand.equals("right")) {
-                        right = n;
-                        sb.append("R");
-                    }else{
-                        left = n;
-                        sb.append("L");
-                    }
-                } else if (leftDiff > rightDiff) {
-                    right = n;
-                    sb.append("R");
-                } else {
-                    left = n;
-                    sb.append("L");
+        StringBuilder answer = new StringBuilder();
+        
+        for(int number : numbers){
+            answer.append(pressKey(number, hand));
+        }
+        return answer.toString();
+    }
+    
+    public String pressKey(int number, String hand){
+        if(number == 1 || number == 4 || number == 7){ // 왼쪽열
+            left = number;
+            return "L";
+        }else if(number == 3 || number == 6 || number == 9){ // 오른쪽열
+            right = number;
+            return "R";
+        }else{// 가운데열
+            if(number == 0) number = 11; // 예외처리
+            int leftDis = (Math.abs(left - number) / 3) + (Math.abs(left - number) % 3);
+            int rightDis = (Math.abs(right - number) / 3) + (Math.abs(right - number) % 3);
+            if(leftDis < rightDis){
+                left = number;
+                return "L";
+            }else if(leftDis > rightDis){
+                right = number;
+                return "R";
+            }else{
+                if(hand.equals("left")){
+                    left = number;
+                    return "L";
+                }else{
+                    right = number;
+                    return "R";
                 }
             }
         }
-        return sb.toString();
     }
 }
