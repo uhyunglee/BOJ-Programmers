@@ -1,42 +1,62 @@
+import java.util.*;
+import java.util.stream.*;
+
 class Solution {
-    static int left = 10;
-    static int right = 12;
-    
     public String solution(int[] numbers, String hand) {
-        StringBuilder answer = new StringBuilder();
+        Hand right = new Hand("R", hand.equals("right"), 2);
+        Hand left = new Hand("L", hand.equals("left"), 0);
         
-        for(int number : numbers){
-            answer.append(pressKey(number, hand));
-        }
-        return answer.toString();
+        return Arrays.stream(numbers)
+            .mapToObj(n -> press(n, right, left).hand)
+            .collect(Collectors.joining());
     }
-    
-    public String pressKey(int number, String hand){
-        if(number == 1 || number == 4 || number == 7){ // 왼쪽열
-            left = number;
-            return "L";
-        }else if(number == 3 || number == 6 || number == 9){ // 오른쪽열
-            right = number;
-            return "R";
-        }else{// 가운데열
-            if(number == 0) number = 11; // 예외처리
-            int leftDis = (Math.abs(left - number) / 3) + (Math.abs(left - number) % 3);
-            int rightDis = (Math.abs(right - number) / 3) + (Math.abs(right - number) % 3);
-            if(leftDis < rightDis){
-                left = number;
-                return "L";
-            }else if(leftDis > rightDis){
-                right = number;
-                return "R";
-            }else{
-                if(hand.equals("left")){
-                    left = number;
-                    return "L";
-                }else{
-                    right = number;
-                    return "R";
-                }
-            }
+    private int getX(int num){
+        if(num == 0) return 1;
+        
+        return (num - 1) % 3;
+    }
+    private int getY(int num){
+        if(num == 0) return 3;
+        return (num - 1) / 3;
+    }
+    private static class Hand{
+        private final int baseX;
+        private final String hand;
+        public final float preference;
+        private int x, y;
+        
+        public Hand(String hand, boolean isPreferred, int x){
+            this.hand = hand;
+            this.baseX = x;
+            this.preference = isPreferred ? 0.5f : 0;
+            this.x = x;
+            this.y = 3;
         }
+        
+        public float distance(int x, int y){
+            if(x == baseX) return 0;
+            int distance = Math.abs(x - this.x) + Math.abs(y - this.y);
+            return distance - preference;
+        }
+        public void move(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+    private Hand press(int number, Hand right, Hand left){
+        int x = getX(number);
+        int y = getY(number);
+        
+        float rDistance = right.distance(x, y);
+        float lDistance = left.distance(x, y);
+        
+        Hand hand = right;
+        if(lDistance < rDistance){
+            hand = left;
+        }
+        hand.move(x, y);
+        
+        return hand;
+        
     }
 }
