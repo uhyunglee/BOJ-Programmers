@@ -7,20 +7,21 @@ public class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        List<Integer> list = Arrays.stream(br.readLine().split(" ")).map(Integer::parseInt).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-        int sum = 0;
-        for(int i = 0; i < list.size(); i++){
-            sum += list.get(i);
-        }
 
-        int cost = 0;
-        while(list.size() != 1){
-            int bigOne = list.get(0);
-            sum -= bigOne;
-            cost += (bigOne * sum);
-            list.remove(0);
+        List<Integer> list = Arrays.stream(br.readLine().split(" "))
+            .map(Integer::parseInt)
+            .sorted(Comparator.reverseOrder())
+            .collect(Collectors.toList());
+        long[] suffixSum = new long[n];
+        suffixSum[n - 1] = 0;
+
+        for(int i = n - 2; i >= 0; i--){
+            suffixSum[i] = suffixSum[i + 1] + list.get(i + 1);
+        }
+        long cost = 0;
+        for(int i = 0; i < n - 1; i++){
+            cost += (long) list.get(i) * suffixSum[i];
         }
         System.out.println(cost);
-
     }
 }
