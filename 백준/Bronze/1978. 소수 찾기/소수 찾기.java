@@ -14,11 +14,8 @@ public class Main{
         for(int num : arr){
             if(num == 1) continue;
             boolean isPrime = true;
-            for(int i = 2; i < num; i++){
-                if(num % i == 0) {
-                    isPrime = false;
-                    break;
-                }
+            for(int i = 2; i <= Math.sqrt(num); i++){
+                if(num % i == 0) isPrime = false;
             }
             if(isPrime) count++;
         }
