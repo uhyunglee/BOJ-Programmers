@@ -7,11 +7,12 @@ public class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
         int count = 0;
-        for(int num : arr){
+        while(st.hasMoreTokens()){
+            int num = Integer.parseInt(st.nextToken());
             if(num == 1) continue;
             boolean isPrime = true;
             for(int i = 2; i <= Math.sqrt(num); i++){
