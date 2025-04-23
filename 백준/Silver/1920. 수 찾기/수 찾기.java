@@ -7,25 +7,19 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-        int[] arr1 = Arrays.stream(br.readLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
         Set<Integer> set = new HashSet<>();
-        for(int i = 0; i < n; i++){
-            set.add(arr1[i]);
-        }
+        Arrays.stream(br.readLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .forEach(set::add);
 
         int m = Integer.parseInt(br.readLine());
-        int[] arr2 = Arrays.stream(br.readLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < m; i++){
-            if(set.contains(arr2[i])){
-                bw.write("1" + "\n");
-            }else
-                bw.write("0" + "\n");
-        }
+        Arrays.stream(br.readLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .forEach(num -> sb.append(set.contains(num) ? "1\n" : "0\n"));
+
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
