@@ -15,10 +15,11 @@ public class Main {
         }
         char[] arr = br.readLine().toCharArray();
         long answer = 0;
+        long power = 1;
         for(int i = 0; i < arr.length; i++){
             int a = map.get(arr[i]);
-            int rad = (int)Math.pow(31, i);
-            answer += a * rad;
+            answer = (answer + (a * power) % M) % M;
+            power = (power * r) % M;
         }
         System.out.println(answer);
     }
