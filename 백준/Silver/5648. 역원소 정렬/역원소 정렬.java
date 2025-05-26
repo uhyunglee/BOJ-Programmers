@@ -11,10 +11,9 @@ public class Main {
         StringTokenizer st;
         String line = "";
         while((line = br.readLine()) != null){
-            if(line.trim().isEmpty()) continue;
             st = new StringTokenizer(line);
             while(st.hasMoreTokens()){
-                long num = Long.parseLong(st.nextToken());
+                String num = st.nextToken();
                 list.add(reverseNum(num));
             }
         }
@@ -23,19 +22,12 @@ public class Main {
         for(int i = 0; i < list.size(); i++){
             bw.write(list.get(i) + "\n");
         }
-
-
         bw.flush();
         bw.close();
     }
-    static long reverseNum(long n){
-        if(n == 0) return 0;
-        StringBuilder sb = new StringBuilder();
-        while(n != 0){
-            long lastNum = n % 10;
-            n /= 10;
-            sb.append(lastNum);
-        }
+    static long reverseNum(String n){
+        StringBuilder sb = new StringBuilder(n);
+        sb.reverse();
         return Long.parseLong(sb.toString());
     }
 }
