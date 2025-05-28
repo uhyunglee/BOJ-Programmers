@@ -1,4 +1,5 @@
-// 시간복잡도 : O(nlogn)
+// 시간복잡도 : O(logn)
+// 접근방법 : n < 20,000 정렬된 배열에서 이분탐색으로 접근
 
 import java.io.*;
 import java.util.*;
