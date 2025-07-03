@@ -10,17 +10,17 @@ public class Main {
 
         PriorityQueue<Integer> minheap = new PriorityQueue<>();
 
-        int count = 0;
         while(N-- > 0){
             int num = Integer.parseInt(br.readLine());
-            if(minheap.size() == 0 && num == 0){
-                bw.write("0\n");
-            }else if(num == 0){
-                bw.write(minheap.poll() + "\n");
+            if(num == 0){
+                if(minheap.isEmpty()){
+                    bw.write("0\n");
+                }else{
+                    bw.write(minheap.poll()+"\n");
+                }
             }else{
-                minheap.add(num);
+                minheap.offer(num);
             }
-
         }
 
         bw.flush();
