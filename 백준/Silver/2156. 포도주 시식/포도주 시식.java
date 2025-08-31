@@ -1,15 +1,16 @@
+import java.nio.Buffer;
 import java.util.*;
 import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
 
         int[] wine = new int[n + 1];
         int[][] dp = new int[3][n + 1];
         for(int i = 1; i <= n; i++){
-            wine[i] = sc.nextInt();
+            wine[i] = Integer.parseInt(br.readLine());
         }
         dp[0][1] = 0;
         dp[1][1] = wine[1];
