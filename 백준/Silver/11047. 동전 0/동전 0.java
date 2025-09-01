@@ -9,19 +9,19 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        int[] arr = new int[N];
-        for(int i = 0; i < N; i++){
-            arr[N - 1 - i] = Integer.parseInt(br.readLine());
+        int[] coins = new int[N];
+        for (int i = 0; i < N; i++) {
+            coins[N - 1 - i] = Integer.parseInt(br.readLine());
         }
+
         int count = 0;
-        while(K > 0){
-            for(int i = 0; i < arr.length; i++){
-                if(arr[i] <= K){
-                    count += K / arr[i];
-                    K %= arr[i];
-                }
+        for (int i = 0; i < N; i++) {
+            if (coins[i] <= K) {
+                count += K / coins[i];
+                K %= coins[i];
             }
         }
+
         System.out.println(count);
     }
 }
